@@ -1,4 +1,3 @@
-
 export const URI = {
     BASE_URI: "/ironcrypt",
     BASE_URL: "http://127.0.0.1",
@@ -13,7 +12,6 @@ export const URI = {
     FILE_UPLOAD: "/file/upload",
     FILE_DOWNLOAD: "/file/download",
     FILE_DELETE: "/file/delete"
-
 
 
 }

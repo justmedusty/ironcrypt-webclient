@@ -18,7 +18,7 @@
         })
 
         if (response.ok) {
-            alert("Signuo success")
+            alert("Signup success")
         } else {
             alert(`Signup failed : ${await response.json()}`)
         }

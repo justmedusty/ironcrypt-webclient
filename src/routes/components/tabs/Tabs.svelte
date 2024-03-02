@@ -35,6 +35,7 @@
         margin-bottom: 0;
         list-style: none;
         border-bottom: 1px solid #dee2e6;
+        justify-content: center;
     }
     li {
         margin-bottom: -1px;

@@ -47,7 +47,8 @@
         margin: 0 auto;
         text-align: center;
     }
-    label{
+
+    label {
         font-family: "Bell MT", system-ui;
     }
 
@@ -57,7 +58,7 @@
     }
 
     button {
-       background-color: #000000;
+        background-color: #000000;
         color: whitesmoke;
         width: 50%;
     }
@@ -91,7 +92,6 @@
     <button class="switch-pages" aria-current={$page.url.pathname.startsWith('/signup') ? 'page' : undefined}>
         <a href="/signup">Don't have an account?</a>
     </button>
-
 
 
 </form>

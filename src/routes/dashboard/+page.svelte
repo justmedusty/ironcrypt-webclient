@@ -3,6 +3,7 @@
     import Counter from "../Counter.svelte";
     import Tabs from "../components/tabs/Tabs.svelte";
     import {deleteToken} from "../../auth/TokenHandling.js";
+    import FileViewer from "../components/FileViewer.svelte";
     function handleLogout() {
         deleteToken()
     }
@@ -12,7 +13,7 @@
         {
             label: "Your Files",
             value: 1,
-            component: Counter
+            component: FileViewer
         },
         {
             label: "Account Settings",
@@ -20,8 +21,13 @@
             component: Counter
         },
         {
-            label: "About",
+            label: "Public Key Settings",
             value: 3,
+            component: Counter
+        },
+        {
+            label: "About",
+            value: 4,
             component: Counter
         }
     ];
