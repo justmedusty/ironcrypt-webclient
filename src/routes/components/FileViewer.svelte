@@ -41,7 +41,7 @@
                 }
             });
             if (!response.ok) {
-                throw new Error('Failed to fetch user files');
+               alert('Failed to fetch user files');
             }
             const responseData = await response.json();
             // Map the file names from the response data to instances of the File class
