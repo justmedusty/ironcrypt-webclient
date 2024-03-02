@@ -1,24 +1,25 @@
-<script>
-    import {URI} from "../utils/enums.js";
+<script lang="ts">
 
-    let username =""
+    import {URI} from "../utils/enums.ts";
+
+    let username = ""
     let password = ""
 
-    async function handleSubmit(){
+    async function handleSubmit() {
 
-        const response = await fetch(URI.BASE_URL +  URI.BASE_URI + URI.SIGNUP, {
-            method:"POST",
+        const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.SIGNUP, {
+            method: "POST",
             headers: {
-                "Content-type":"application/json"
+                "Content-type": "application/json"
             },
-            body: JSON.stringify({username,password})
+            body: JSON.stringify({username, password})
 
         })
 
-        if(response.ok){
-            alert("Login success")
+        if (response.ok) {
+            alert("Signuo success")
         } else {
-            alert(`Login failed : ${await response.json()}`)
+            alert(`Signup failed : ${await response.json()}`)
         }
 
     }
@@ -39,7 +40,7 @@
         width: 100%;
     }
 
-    h1{
+    h1 {
         color: crimson;
     }
 
@@ -62,3 +63,4 @@
     </label>
     <button type="submit">Submit</button>
 </form>
+

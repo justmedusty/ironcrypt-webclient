@@ -1,5 +1,7 @@
-<script>
-    import {URI} from "../utils/enums.js";
+<script lang="ts">
+    import {URI} from "../utils/enums";
+    import {saveToken} from "../../auth/TokenHandling.ts";
+    import Header from "../Header.svelte";
 
     let username = ""
     let password = ""
@@ -20,17 +22,22 @@
             })
 
             if (response.ok) {
+                const responseData = await response.json()
+                const token = responseData['access_token']
+                saveToken(token)
                 alert("Login Success")
             } else {
                 alert("Login failed")
             }
 
-        } catch (error) {
+        } catch
+            (error) {
             console.error("Error logging in")
             alert("Error")
         }
 
     }
+
 
 </script>
 
@@ -38,6 +45,10 @@
     form {
         max-width: 300px;
         margin: 0 auto;
+        text-align: center;
+    }
+    label{
+        font-family: "Bell MT", system-ui;
     }
 
     input {
@@ -46,7 +57,15 @@
     }
 
     button {
-        width: 100%;
+       background-color: #4f67ff;
+        color: whitesmoke;
+        font-family: "Bell MT", system-ui;
+        width: 50%;
+    }
+
+    h1 {
+        color: crimson;
+        font-family: "Bell MT", system-ui;
     }
 
 </style>
@@ -54,6 +73,7 @@
 <h1>Login</h1>
 
 <form on:submit|preventDefault={handleSubmit}>
+
     <label>
         Username :
         <input type="text" bind:value={username}/>
@@ -67,4 +87,9 @@
 
     </label>
     <button type="submit">Submit</button>
+
+
 </form>
+
+
+
