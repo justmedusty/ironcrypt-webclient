@@ -5,17 +5,17 @@
 
     let items = [
         {
-            label: "Content",
+            label: "Your Files",
             value: 1,
             component: Counter
         },
         {
-            label: "Interactions",
+            label: "Account Settings",
             value: 2,
             component: Counter
         },
         {
-            label: "Tab 3",
+            label: "About",
             value: 3,
             component: Counter
         }

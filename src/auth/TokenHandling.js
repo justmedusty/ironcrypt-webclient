@@ -1,4 +1,4 @@
-export const saveToken = (accessToken: string) => {
+export const saveToken = (accessToken) => {
     const tokenData = {
         token: accessToken,
         timestamp: Date.now(),
@@ -9,7 +9,7 @@ export const saveToken = (accessToken: string) => {
     console.log('Token saved:', accessToken);
 };
 
-export const getToken = (): string | null => {
+export const getToken = ()  => {
     const tokenDataString = localStorage.getItem('accessToken');
 
     if (!tokenDataString) {
@@ -38,7 +38,7 @@ export const deleteToken = () => {
 };
 
 // Automatically delete token after 5 minutes on token update
-export const saveTokenWithAutoDelete = (accessToken: string) => {
+export const saveTokenWithAutoDelete = (accessToken) => {
     saveToken(accessToken);
 
     // Schedule the token deletion after 5 minutes

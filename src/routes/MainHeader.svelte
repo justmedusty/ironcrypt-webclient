@@ -1,10 +1,6 @@
-<script>
-import {page} from "$app/stores";
-</script>
-
 <header>
     <ul>
-        <li >
+        <li>
             <h1 style="margin-bottom: 0">IronCrypt</h1>
         </li>
         <li>
@@ -15,6 +11,11 @@ import {page} from "$app/stores";
 
 
 <style>
+
+    a{
+        color:blue;
+        font-size: large;
+    }
     header {
         display: flex;
         justify-content: center; /* Center content horizontally */
@@ -22,6 +23,8 @@ import {page} from "$app/stores";
         width: 100vw; /* Full width of the viewport */
         max-width: 100%; /* Limit width to the viewport width */
         box-sizing: border-box;
+        margin-top: 15px;
+        margin-bottom: 2vb;
     }
 
     ul {
@@ -39,9 +42,9 @@ import {page} from "$app/stores";
     }
 
     li {
-        font-family: "OCR A Extended",system-ui;
-        font-weight: bolder;
-        font-size: x-large;
+        font-family: "OCR A Extended", system-ui;
+        text-align: center;
+
     }
 
 

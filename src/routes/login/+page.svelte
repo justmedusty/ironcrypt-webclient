@@ -1,7 +1,6 @@
 <script lang="ts">
     import {URI} from "../utils/enums";
-    import {saveToken} from "../../auth/TokenHandling.ts";
-    import Header from "../Header.svelte";
+    import {saveToken} from "../../auth/TokenHandling.js";
     import {page} from "$app/stores";
 
     let username = ""

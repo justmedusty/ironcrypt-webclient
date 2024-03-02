@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import {URI} from "../utils/enums.ts";
+    import {URI} from "../utils/enums.js";
     import {page} from "$app/stores";
 
     let username = ""
