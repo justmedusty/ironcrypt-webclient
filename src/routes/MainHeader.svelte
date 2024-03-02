@@ -21,7 +21,7 @@ import {page} from "$app/stores";
         align-items: center; /* Center content vertically */
         width: 100vw; /* Full width of the viewport */
         max-width: 100%; /* Limit width to the viewport width */
-        box-sizing: border-box; /* Include padding and border in the total width */
+        box-sizing: border-box;
     }
 
     ul {
@@ -39,7 +39,7 @@ import {page} from "$app/stores";
     }
 
     li {
-        font-family: "Franklin Gothic Heavy",system-ui;
+        font-family: "OCR A Extended",system-ui;
         font-weight: bolder;
         font-size: x-large;
     }

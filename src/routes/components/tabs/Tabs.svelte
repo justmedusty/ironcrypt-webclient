@@ -1,8 +1,8 @@
 <script lang="ts">
-    export let items : any = [];
+    export let items  = [];
     export let activeTabValue = 1;
 
-    const handleClick = (tabValue : number)=> () => (activeTabValue = tabValue);
+    const handleClick = tabValue => () => (activeTabValue = tabValue);
 </script>
 
 <ul>

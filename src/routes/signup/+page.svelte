@@ -48,7 +48,7 @@
     }
 
     h1 {
-        color: crimson;
+        color: #000000;
     }
 
 </style>

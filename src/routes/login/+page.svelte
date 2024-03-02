@@ -64,7 +64,7 @@
     }
 
     h1 {
-        color: crimson;
+        color: #000000;
     }
 
 </style>
@@ -85,6 +85,9 @@
 
 
     </label>
+    <button class="switch-pages" aria-current={$page.url.pathname.startsWith('/dashboard') ? 'page' : undefined}>
+        <a href="/dashboard">test</a>
+    </button>
     <button type="submit">Submit</button>
     <button class="switch-pages" aria-current={$page.url.pathname.startsWith('/signup') ? 'page' : undefined}>
         <a href="/signup">Don't have an account?</a>

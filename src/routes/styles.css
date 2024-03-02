@@ -7,12 +7,12 @@
 	--color-bg-0: rgb(58, 217, 0);
 	--color-bg-1: hsl(123, 100%, 86%);
 	--color-bg-2: hsl(103, 100%, 93%);
-	--color-theme-1: #ff0000;
+	--color-theme-1: #ffffff;
 	--color-theme-2: #000000;
 	--color-text: rgb(0, 0, 0);
 	--column-width: 42rem;
 	--column-margin-top: 4rem;
-	font-family: var(--font-body);
+	font-family: "OCR A Extended",sans-serif;
 	color: var(--color-text);
 }
 
