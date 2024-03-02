@@ -42,8 +42,10 @@
     }
 
     li {
-        font-family: "OCR A Extended", system-ui;
+        font-family: "OCR A Extended", monospace;
         text-align: center;
+        font-weight: 900;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.65); /* Adjust values as needed */
 
     }
 

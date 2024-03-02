@@ -1,12 +1,9 @@
 <script>
     import './styles.css';
     import MainHeader from "./MainHeader.svelte";
-    import {deleteToken} from "../auth/TokenHandling.js";
 
-    function handleLogout() {
-        deleteToken()
 
-    }
+
 </script>
 
 <div class="app">
@@ -20,8 +17,6 @@
     </main>
 
     <footer>
-        <button on:click={handleLogout}>Logout
-        </button>
         <p>Visit <a style="color: blue" href="http://6v4gddjepi6gu6khtkheqkniza2p2u6lsmwa5acod4xq5jh3dkdyevad.onion/">My Onion Blog</a> to learn more about the app and my whys and hows</p>
     </footer>
 </div>
