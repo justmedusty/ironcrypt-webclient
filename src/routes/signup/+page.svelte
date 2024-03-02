@@ -2,25 +2,32 @@
 
     import {URI} from "../utils/enums.js";
     import {page} from "$app/stores";
+    import {goto} from "$app/navigation";
 
     let username = ""
     let password = ""
 
     async function handleSubmit() {
 
+
         const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.SIGNUP, {
             method: "POST",
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({username, password})
+            body: JSON.stringify({
+                username, password
+            }),
 
         })
 
+
         if (response.ok) {
-            alert("Signup success")
+            password = ""
+            username = ""
+            goto("/login")
         } else {
-            alert(`Signup failed : ${await response.json()}`)
+            alert(`Signup failed : ${response.status}`)
         }
 
     }
@@ -65,11 +72,11 @@
     </label>
     <label>
         Password :
-        <input type="text" bind:value={password}/>
+        <input type="password" bind:value={password}/>
 
 
     </label>
-    <button type="submit">Submit</button>
+    <button style="margin-bottom: 25px" type="submit">Submit</button>
     <button class="switch-pages" aria-current={$page.url.pathname.startsWith("/login")?undefined:'page'}>
         <a href="/login">Already have an account?</a>
     </button>

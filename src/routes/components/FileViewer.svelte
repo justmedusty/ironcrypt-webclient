@@ -1,15 +1,19 @@
 <script>
-
+    import {getToken} from "../../auth/TokenHandling.js";
+    import {URI} from "../utils/enums.js";
+    import {onMount} from "svelte";
     let selectedFile;
-    let files = [
-        {name: "test.jpg.gpg"},
-        {name: "test.jpg.gpg"},
-        {name: "test.jpg.gpg"},
-        {name: "test.jpg.gpg"},
-        {name: "test.jpg.gpg"},
-        {name: "test.jpg.gpg"},
-        {name: "test.jpg.gpg"}
-    ]
+    onMount(fetchUserFiles)
+
+    class File {
+        constructor(fileId, ownerId, fileName, fileSizeBytes) {
+            this.fileId = fileId;
+            this.ownerId = ownerId;
+            this.fileName = fileName;
+            this.fileSizeBytes = fileSizeBytes;
+        }
+    }
+    let files = []
 
     function downloadFile(fileId) {
         // Implement file download logic here
@@ -26,6 +30,27 @@
         selectedFile = event.target.files[0]
 
     }
+
+    async function fetchUserFiles() {
+        try {
+            const token = getToken();
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_FETCH, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch user files');
+            }
+            const responseData = await response.json();
+            // Map the file names from the response data to instances of the File class
+            files = responseData.map(fileData => new File(fileData.name));
+            console.log('User files:', files);
+        } catch (error) {
+            console.error('Error fetching user files:', error);
+        }
+    }
 </script>
 
 <style>
@@ -34,6 +59,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
         gap: 20px; /* Adjust gap between items as needed */
+        min-width: 40vb;
     }
 
     /* CSS styles for individual file items */
@@ -56,28 +82,41 @@
     }
 
     button {
-        margin-left: 5px;
+        margin-left: 10px;
 
     }
 
-    .upload-bar{
-        margin-bottom: 15px;
+    .upload-bar,.upload-form {
+        margin-bottom: 25px;
     }
 </style>
 <div>
-    <div class="upload-bar">
-        <label for="file-upload">To upload , choose a file:</label>
-        <input type="file" id="file-upload" accept=".jpg,.png,.pdf" on:change={uploadFile} />
-    </div>
+
+    <form class="upload-form">
+        <div class="upload-bar">
+            <label for="file">Upload your file</label>
+            <input
+                    type="file"
+                    id="file"
+                    name="fileToUpload"
+                    required
+            />
+        </div>
+
+
+        <button type="submit">Submit</button>
+
+    </form>
+
 
     <div class="file-grid">
         {#each files as {name}}
             <div class="file-item">
                 <img src="/src/lib/images/lockedfile.png" alt={name} class="file-image">
-                <div>{name}</div>
+                <div>{name} </div>
                 <div class="button-row">
                     <button on:click={() => downloadFile(name)}>Download</button>
-                    <button on:click={() => deleteFile(name)}>Delete file</button>
+                    <button on:click={() => deleteFile(name)}>Delete</button>
                 </div>
 
             </div>

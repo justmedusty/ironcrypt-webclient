@@ -2,6 +2,7 @@
     import {URI} from "../utils/enums";
     import {saveToken} from "../../auth/TokenHandling.js";
     import {page} from "$app/stores";
+    import {goto} from "$app/navigation";
 
     let username = ""
     let password = ""
@@ -25,7 +26,10 @@
                 const responseData = await response.json()
                 const token = responseData['access_token']
                 saveToken(token)
-                alert("Login Success")
+                username = ""
+                password = ""
+                goto("/dashboard")
+
             } else {
                 alert("Login failed")
             }
@@ -76,14 +80,11 @@
     </label>
     <label>
         Password :
-        <input type="text" bind:value={password}/>
+        <input type="password" bind:value={password}/>
 
 
     </label>
-    <button class="switch-pages" aria-current={$page.url.pathname.startsWith('/dashboard') ? 'page' : undefined}>
-        <a href="/dashboard">test</a>
-    </button>
-    <button type="submit">Submit</button>
+    <button style="margin-bottom: 25px;  width: 50%;" type="submit">Submit</button>
     <button class="switch-pages" aria-current={$page.url.pathname.startsWith('/signup') ? 'page' : undefined}>
         <a href="/signup">Don't have an account?</a>
     </button>

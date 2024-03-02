@@ -1,6 +1,6 @@
 export const URI = {
     BASE_URI: "/ironcrypt",
-    BASE_URL: "http://127.0.0.1",
+    BASE_URL: "http://127.0.0.1:6969",
     LOGIN: "/login",
     SIGNUP: "/signup",
     CHANGE_USERNAME: "/profile/changeUserName",
@@ -11,7 +11,8 @@ export const URI = {
     DELETE_KEY: "/key/deleteMyPublicKey",
     FILE_UPLOAD: "/file/upload",
     FILE_DOWNLOAD: "/file/download",
-    FILE_DELETE: "/file/delete"
+    FILE_DELETE: "/file/delete",
+    FILE_FETCH: "/file/fetch"
 
 
 }

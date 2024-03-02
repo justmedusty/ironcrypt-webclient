@@ -2,7 +2,7 @@
     export let items = [];
     export let activeTabValue = 1;
 
-    const handleClick = (tabValue )=> () => (activeTabValue = tabValue);
+    const handleClick = tabValue => () => (activeTabValue = tabValue);
 </script>
 
 <ul>
