@@ -57,11 +57,6 @@
         margin-bottom: 10px;
     }
 
-    button {
-        background-color: #000000;
-        color: whitesmoke;
-        width: 50%;
-    }
 
     h1 {
         color: #000000;

@@ -1,12 +1,31 @@
 <script>
- let files = [
-     {name: "test.jpg.gpg",imageUrl:"lockedfile.png" }
- ]
 
- function downloadFile(fileId) {
-     // Implement file download logic here
-     console.log(`Downloading ${fileId}`);
- }
+    let selectedFile;
+    let files = [
+        {name: "test.jpg.gpg"},
+        {name: "test.jpg.gpg"},
+        {name: "test.jpg.gpg"},
+        {name: "test.jpg.gpg"},
+        {name: "test.jpg.gpg"},
+        {name: "test.jpg.gpg"},
+        {name: "test.jpg.gpg"}
+    ]
+
+    function downloadFile(fileId) {
+        // Implement file download logic here
+        console.log(`Downloading ${fileId}`);
+    }
+
+    function deleteFile(fileId) {
+        // Implement file download logic here
+        console.log(`Deleting${fileId}`);
+    }
+
+    function uploadFile(event) {
+
+        selectedFile = event.target.files[0]
+
+    }
 </script>
 
 <style>
@@ -19,7 +38,6 @@
 
     /* CSS styles for individual file items */
     .file-item {
-        border: 1px solid #ccc;
         padding: 10px;
         text-align: center;
     }
@@ -30,14 +48,39 @@
         height: auto;
         margin-bottom: 10px;
     }
-</style>
 
-<div class="file-grid">
-    {#each files as { name, imageUrl: imageUrl}}
-        <div class="file-item">
-            <img src="/src/lib/images/{imageUrl}" alt={name} class="file-image">
-            <div>{name}</div>
-            <button on:click={() => downloadFile(name)}>Download</button>
-        </div>
-    {/each}
+    .button-row {
+        display: flex;
+        flex-direction: row;
+        margin-block: 5px;
+    }
+
+    button {
+        margin-left: 5px;
+
+    }
+
+    .upload-bar{
+        margin-bottom: 15px;
+    }
+</style>
+<div>
+    <div class="upload-bar">
+        <label for="file-upload">To upload , choose a file:</label>
+        <input type="file" id="file-upload" accept=".jpg,.png,.pdf" on:change={uploadFile} />
+    </div>
+
+    <div class="file-grid">
+        {#each files as {name}}
+            <div class="file-item">
+                <img src="/src/lib/images/lockedfile.png" alt={name} class="file-image">
+                <div>{name}</div>
+                <div class="button-row">
+                    <button on:click={() => downloadFile(name)}>Download</button>
+                    <button on:click={() => deleteFile(name)}>Delete file</button>
+                </div>
+
+            </div>
+        {/each}
+    </div>
 </div>

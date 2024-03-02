@@ -83,6 +83,10 @@ button {
 	font-size: inherit;
 	font-family: inherit;
 }
+button{
+	background-color: #000000;
+	color: whitesmoke;
+}
 
 button:focus:not(:focus-visible) {
 	outline: none;
