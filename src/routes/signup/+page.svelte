@@ -1,6 +1,7 @@
 <script lang="ts">
 
     import {URI} from "../utils/enums.ts";
+    import {page} from "$app/stores";
 
     let username = ""
     let password = ""
@@ -29,6 +30,10 @@
     form {
         max-width: 300px;
         margin: 0 auto;
+        text-align: center;
+    }
+    label{
+        font-family: "Bell MT", system-ui;
     }
 
     input {
@@ -37,7 +42,9 @@
     }
 
     button {
-        width: 100%;
+        background-color: #000000;
+        color: whitesmoke;
+        width: 50%;
     }
 
     h1 {
@@ -45,6 +52,7 @@
     }
 
 </style>
+
 
 <h1>Sign Up</h1>
 
@@ -62,5 +70,9 @@
 
     </label>
     <button type="submit">Submit</button>
+    <button class="switch-pages" aria-current={$page.url.pathname.startsWith("/login")?undefined:'page'}>
+        <a href="/login">Already have an account?</a>
+    </button>
+
 </form>
 

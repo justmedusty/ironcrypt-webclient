@@ -2,6 +2,7 @@
     import {URI} from "../utils/enums";
     import {saveToken} from "../../auth/TokenHandling.ts";
     import Header from "../Header.svelte";
+    import {page} from "$app/stores";
 
     let username = ""
     let password = ""
@@ -57,15 +58,13 @@
     }
 
     button {
-       background-color: #4f67ff;
+       background-color: #000000;
         color: whitesmoke;
-        font-family: "Bell MT", system-ui;
         width: 50%;
     }
 
     h1 {
         color: crimson;
-        font-family: "Bell MT", system-ui;
     }
 
 </style>
@@ -87,6 +86,10 @@
 
     </label>
     <button type="submit">Submit</button>
+    <button class="switch-pages" aria-current={$page.url.pathname.startsWith('/signup') ? 'page' : undefined}>
+        <a href="/signup">Don't have an account?</a>
+    </button>
+
 
 
 </form>

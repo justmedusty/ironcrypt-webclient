@@ -3,8 +3,6 @@
 </script>
 
 <header>
-    <div class="corner">
-    </div>
 
     <nav>
 
@@ -31,14 +29,13 @@
         display: flex;
         justify-content: space-between;
         width: 100vw; /* Use viewport width */
-        font-family: "Bell MT",system-ui;
         box-sizing: border-box; /* Include padding and border in the total width */
     }
 
     nav {
         display: flex;
         justify-content: center;
-        --background: rgba(255, 255, 255, 0.7);
+        --background: rgba(255, 0, 0, 0.7);
     }
 
     ul {
