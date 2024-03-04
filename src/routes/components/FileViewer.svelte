@@ -31,7 +31,7 @@
                 });
 
         } catch (error) {
-            console.log("An error occurdere")
+            console.log("An error occurred")
         }
     }
 
@@ -55,9 +55,9 @@
     }
 
     async function uploadFile() {
-        try{
+        try {
 
-        selectedFile = chosenFile
+            selectedFile = chosenFile
             const token = getToken()
             const formData = new FormData()
             formData.append('file', selectedFile)
@@ -73,6 +73,7 @@
             })
             if (response.ok) {
                 alert("Successfully uploaded")
+                fetchUserFiles(page)
             } else {
                 alert(response.json())
             }
@@ -116,18 +117,20 @@
     }
 
     function handleNextPage() {
-        files = []
-        page++
-        fetchUserFiles(page)
+        if (files.length === 25) {
+            page++
+            fetchUserFiles(page)
+        }
+
     }
 
     function handlePreviousPage() {
-        files = []
         if (page > 1) {
             page--
+            fetchUserFiles(page)
         }
 
-        fetchUserFiles(page)
+
     }
 
     function handleFileChange(event) {
