@@ -16,6 +16,7 @@
 
     let page = 1
     let files = []
+    let chosenFile;
 
     async function downloadFile(fileId) {
         // Implement file download logic here
@@ -53,14 +54,10 @@
         }
     }
 
-    async function uploadFile(event) {
-        event.preventDefault()
-        if (!event.target.files || !event.target.files[0]) {
-            console.error("No file selected");
-            return;
-        }
-        selectedFile = event.target.files[0]
-        try {
+    async function uploadFile() {
+        try{
+
+        selectedFile = chosenFile
             const token = getToken()
             const formData = new FormData()
             formData.append('file', selectedFile)
@@ -68,12 +65,12 @@
             const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
+
 
                 },
                 body: formData
             })
-
             if (response.ok) {
                 alert("Successfully uploaded")
             } else {
@@ -95,7 +92,7 @@
                 }
             });
             if (!response.ok) {
-                throw new Error("Failed to fetch user files");
+                alert("Failed to fetch user files");
             }
             const responseData = await response.json();
             console.log('Response data:', responseData); // Log the response data
@@ -131,6 +128,11 @@
         }
 
         fetchUserFiles(page)
+    }
+
+    function handleFileChange(event) {
+        const file = event.target.files[0];
+        chosenFile = file;
     }
 </script>
 
@@ -173,13 +175,14 @@
 </style>
 <div>
 
-    <form class="upload-form" on:submit={uploadFile}>
+    <form class="upload-form" on:submit|preventDefault={uploadFile}>
         <div class="upload-bar">
             <label for="file">Upload your file</label>
             <input
                     type="file"
                     id="file"
                     name="fileToUpload"
+                    on:change={handleFileChange}
                     required
             />
         </div>
