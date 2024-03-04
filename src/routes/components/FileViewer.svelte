@@ -2,54 +2,135 @@
     import {getToken} from "../../auth/TokenHandling.js";
     import {URI} from "../utils/enums.js";
     import {onMount} from "svelte";
+
     let selectedFile;
     onMount(fetchUserFiles)
 
     class File {
-        constructor(fileId, ownerId, fileName, fileSizeBytes) {
+        constructor(fileId, fileName, fileSizeBytes) {
             this.fileId = fileId;
-            this.ownerId = ownerId;
             this.fileName = fileName;
             this.fileSizeBytes = fileSizeBytes;
         }
     }
+
+    let page = 1
     let files = []
 
-    function downloadFile(fileId) {
+    async function downloadFile(fileId) {
         // Implement file download logic here
-        console.log(`Downloading ${fileId}`);
+        try {
+            const token = getToken()
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_DOWNLOAD,
+                {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+        } catch (error) {
+            console.log("An error occurdere")
+        }
     }
 
-    function deleteFile(fileId) {
-        // Implement file download logic here
-        console.log(`Deleting${fileId}`);
+    async function deleteFile(fileId) {
+        try {
+            const token = getToken()
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_DELETE + `/${fileId}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+            if (response.ok) {
+                alert("Delete Success!")
+                fetchUserFiles(page)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    function uploadFile(event) {
-
+    async function uploadFile(event) {
+        event.preventDefault()
+        if (!event.target.files || !event.target.files[0]) {
+            console.error("No file selected");
+            return;
+        }
         selectedFile = event.target.files[0]
+        try {
+            const token = getToken()
+            const formData = new FormData()
+            formData.append('file', selectedFile)
+
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`
+
+                },
+                body: formData
+            })
+
+            if (response.ok) {
+                alert("Successfully uploaded")
+            } else {
+                alert(response.json())
+            }
+        } catch (e) {
+            alert("error")
+        }
 
     }
 
-    async function fetchUserFiles() {
+    async function fetchUserFiles(page) {
         try {
             const token = getToken();
-            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_FETCH, {
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_FETCH + `?page=${page}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             if (!response.ok) {
-               alert('Failed to fetch user files');
+                throw new Error("Failed to fetch user files");
             }
             const responseData = await response.json();
-            // Map the file names from the response data to instances of the File class
-            files = responseData.map(fileData => new File(fileData.name));
+            console.log('Response data:', responseData); // Log the response data
+
+            // Find the key representing the array of files
+            const filesKey = Object.keys(responseData).find(key => Array.isArray(responseData[key]));
+
+            if (!filesKey) {
+                console.log("No files found in response data");
+            }
+
+            // Extract the array of files
+            const filesData = responseData[filesKey];
+
+            // Map the files data to instances of the File class
+            files = filesData.map(fileData => new File(fileData.fileId, fileData.fileName, fileData.fileSizeBytes));
             console.log('User files:', files);
         } catch (error) {
             console.error('Error fetching user files:', error);
         }
+    }
+
+    function handleNextPage() {
+        files = []
+        page++
+        fetchUserFiles(page)
+    }
+
+    function handlePreviousPage() {
+        files = []
+        if (page > 1) {
+            page--
+        }
+
+        fetchUserFiles(page)
     }
 </script>
 
@@ -86,13 +167,13 @@
 
     }
 
-    .upload-bar,.upload-form {
+    .upload-bar, .upload-form {
         margin-bottom: 25px;
     }
 </style>
 <div>
 
-    <form class="upload-form">
+    <form class="upload-form" on:submit={uploadFile}>
         <div class="upload-bar">
             <label for="file">Upload your file</label>
             <input
@@ -102,24 +183,27 @@
                     required
             />
         </div>
-
-
         <button type="submit">Submit</button>
-
     </form>
 
 
     <div class="file-grid">
-        {#each files as {name}}
+        {#each files as file}
             <div class="file-item">
-                <img src="/src/lib/images/lockedfile.png" alt={name} class="file-image">
-                <div>{name} </div>
+                <img src="/src/lib/images/lockedfile.png" alt={file.fileName} class="file-image">
+                <div>{file.fileName} </div>
                 <div class="button-row">
-                    <button on:click={() => downloadFile(name)}>Download</button>
-                    <button on:click={() => deleteFile(name)}>Delete</button>
+                    <button on:click={() => downloadFile(file.fileId)}>Download</button>
+                    <button on:click={() => deleteFile(file.fileId)}>Delete</button>
                 </div>
 
             </div>
         {/each}
     </div>
+    <div style="margin-top: 70px">
+        <button on:click={handlePreviousPage}>Previous</button>
+        <button on:click={handleNextPage}>Next</button>
+    </div>
+
+
 </div>
