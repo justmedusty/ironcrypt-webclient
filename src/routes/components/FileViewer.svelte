@@ -5,6 +5,7 @@
 
     let selectedFile;
     onMount(fetchUserFiles)
+    const MAX_FILENAME_LENGTH = 15
 
     class File {
         constructor(fileId, fileName, fileSizeBytes) {
@@ -18,11 +19,11 @@
     let files = []
     let chosenFile;
 
-    async function downloadFile(fileId) {
+    async function downloadFile(fileId, fileName) {
         // Implement file download logic here
         try {
             const token = getToken()
-            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_DOWNLOAD,
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_DOWNLOAD + `/${fileId}`,
                 {
                     method: 'GET',
                     headers: {
@@ -30,6 +31,19 @@
                     }
                 });
 
+            if (!response.ok) {
+                alert('Failed to download file');
+            }
+            const arrayBuffer = await response.arrayBuffer();
+            const blob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
+            const blobUrl = URL.createObjectURL(blob);
+            const tempAnchor = document.createElement('a');
+            tempAnchor.href = blobUrl;
+            tempAnchor.download = fileName + ".gpg";
+            tempAnchor.click();
+
+            // Cleanup
+            URL.revokeObjectURL(blobUrl);
         } catch (error) {
             console.log("An error occurred")
         }
@@ -47,7 +61,7 @@
                 })
             if (response.ok) {
                 alert("Delete Success!")
-                fetchUserFiles(page)
+                await fetchUserFiles(page)
             }
         } catch (error) {
             console.log(error)
@@ -72,10 +86,10 @@
                 body: formData
             })
             if (response.ok) {
-                alert("Successfully uploaded")
                 fetchUserFiles(page)
             } else {
-                alert(response.json())
+                const responseData = await response.json()
+                alert(responseData['Response'])
             }
         } catch (e) {
             alert("error")
@@ -114,6 +128,13 @@
         } catch (error) {
             console.error('Error fetching user files:', error);
         }
+    }
+
+    function truncateFileName(fileName) {
+        if (fileName.length > MAX_FILENAME_LENGTH) {
+            const startIndex = fileName.length - MAX_FILENAME_LENGTH;
+            return "..." + fileName.slice(startIndex);
+        } else return fileName
     }
 
     function handleNextPage() {
@@ -175,6 +196,8 @@
     .upload-bar, .upload-form {
         margin-bottom: 25px;
     }
+
+
 </style>
 <div>
 
@@ -197,9 +220,10 @@
         {#each files as file}
             <div class="file-item">
                 <img src="/src/lib/images/lockedfile.png" alt={file.fileName} class="file-image">
-                <div>{file.fileName} </div>
+                <div>{truncateFileName(file.fileName)}
+                </div>
                 <div class="button-row">
-                    <button on:click={() => downloadFile(file.fileId)}>Download</button>
+                    <button on:click={() => downloadFile(file.fileId,file.fileName)}>Download</button>
                     <button on:click={() => deleteFile(file.fileId)}>Delete</button>
                 </div>
 
