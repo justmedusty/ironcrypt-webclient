@@ -42,5 +42,5 @@ export const saveTokenWithAutoDelete = (accessToken) => {
     saveToken(accessToken);
 
     // Schedule the token deletion after 5 minutes
-    setTimeout(deleteToken, 300000);
+    setTimeout(deleteToken, 900000);
 };

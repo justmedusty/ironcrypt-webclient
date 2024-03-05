@@ -1,29 +1,26 @@
 <script>
     import './styles.css';
     import MainHeader from "./MainHeader.svelte";
-    import Notifications from "svelte-notifications";
+    import {Toaster} from "svelte-french-toast";
 </script>
 
+<Toaster/>
+<div class="app">
+    <MainHeader/>
 
+    <main>
+        <div class="content-box">
+            <slot/>
+        </div>
 
-    <div class="app">
-        <Notifications>
-        <MainHeader/>
+    </main>
 
-        <main>
-            <div class="content-box">
-                <slot/>
-            </div>
-
-        </main>
-
-        <footer>
-            <p>Visit <a style="color: blue"
-                        href="http://6v4gddjepi6gu6khtkheqkniza2p2u6lsmwa5acod4xq5jh3dkdyevad.onion/">My Onion Blog</a>
-                to learn more about the app and my whys and hows</p>
-        </footer>
-        </Notifications>
-    </div>
+    <footer>
+        <p>Visit <a style="color: blue"
+                    href="http://6v4gddjepi6gu6khtkheqkniza2p2u6lsmwa5acod4xq5jh3dkdyevad.onion/">My Onion Blog</a>
+            to learn more about the app and my whys and hows</p>
+    </footer>
+</div>
 
 <style>
     .app {

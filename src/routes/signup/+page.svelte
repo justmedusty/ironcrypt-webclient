@@ -3,10 +3,10 @@
     import {URI} from "../utils/enums.js";
     import {page} from "$app/stores";
     import {goto} from "$app/navigation";
+    import toast from "svelte-french-toast";
 
     let username = ""
     let password = ""
-
     async function handleSubmit() {
 
 
@@ -25,9 +25,10 @@
         if (response.ok) {
             password = ""
             username = ""
+                toast.success("Sign-up Success!")
             goto("/login")
         } else {
-            alert(`Signup failed : ${response.status}`)
+            toast.error("Signup failed: Username must be unique and between 6&45 characters, password must be at least 8 characters.")
         }
 
     }

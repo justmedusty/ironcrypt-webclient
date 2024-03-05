@@ -1,5 +1,5 @@
 <script>
-    import {getToken} from "../../auth/TokenHandling.js";
+    import {deleteToken, getToken} from "../../auth/TokenHandling.js";
     import {URI} from "../utils/enums.js";
 
     let newUserName = ""
@@ -36,40 +36,41 @@
 
         }
     }
-        async function updatePassword() {
-            try {
-                const token = getToken()
-                const formData = new FormData()
-                formData.append("newPassword", newPassword)
 
-                const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.CHANGE_PASSWORD,
-                    {
-                        method: "POST",
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        body: formData
-                    })
+    async function updatePassword() {
+        try {
+            const token = getToken()
+            const formData = new FormData()
+            formData.append("newPassword", newPassword)
+
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.CHANGE_PASSWORD,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: formData
+                })
 
 
-                if (response.ok) {
-                    newPassword = ""
-                    console.log("SUCCESS")
-                } else {
-                }
-                const responseJSON = await response.json()
-                alert(responseJSON["Response"])
-            } catch (error) {
-                alert(error)
-
+            if (response.ok) {
+                newPassword = ""
+                console.log("SUCCESS")
+            } else {
             }
+            const responseJSON = await response.json()
+            alert(responseJSON["Response"])
+        } catch (error) {
+            alert(error)
+
+        }
 
 
     }
 
     async function deleteAccount() {
         try {
-            if(confirmDelete){
+            if (confirmDelete) {
                 const token = getToken()
                 const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.DELETE_ACCOUNT,
                     {
@@ -87,6 +88,11 @@
                 }
                 const responseJSON = await response.json()
                 alert(responseJSON["Response"])
+                if (response.ok) {
+                    deleteToken()
+                } else {
+                    console.log(responseJSON["Response"])
+                }
             }
 
         } catch (error) {
@@ -97,7 +103,7 @@
 </script>
 
 <style>
-    form{
+    form {
         margin-bottom: 50px;
     }
 </style>
@@ -116,7 +122,7 @@
 
     <div>
         <input style="width: 20px ; height:20px" type="checkbox" bind:value={confirmDelete}>
-        <button >Delete Account</button>
+        <button on:click={deleteAccount}>Delete Account</button>
     </div>
 
 </div>
