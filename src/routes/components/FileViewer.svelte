@@ -36,7 +36,7 @@
                 alert('Failed to download file');
             }
             const arrayBuffer = await response.arrayBuffer();
-            const blob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
+            const blob = new Blob([arrayBuffer], {type: 'application/octet-stream'});
             const blobUrl = URL.createObjectURL(blob);
             const tempAnchor = document.createElement('a');
             tempAnchor.href = blobUrl;
@@ -88,7 +88,7 @@
             })
             if (response.ok) {
                 fetchUserFiles(page)
-            } else {
+            } else if (response.status === 400) {
                 const responseData = await response.json()
                 alert(responseData['Response'])
             }
@@ -107,11 +107,14 @@
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (!response.ok) {
-                alert("Failed to fetch user files");
-            }
             const responseData = await response.json();
-            console.log('Response data:', responseData); // Log the response data
+            if (!response.ok) {
+
+                console.log('Response data:', responseData); // Log the res
+                await alert(responseData['Response'])
+                files = []
+            }
+
 
             // Find the key representing the array of files
             const filesKey = Object.keys(responseData).find(key => Array.isArray(responseData[key]));
@@ -200,10 +203,8 @@
     }
 
 
-
 </style>
 <div>
-
 
 
     <div class="file-grid">
