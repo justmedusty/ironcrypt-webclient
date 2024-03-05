@@ -6,7 +6,7 @@
 
     onMount(fetchPublicKey)
 
-    let publicKey;
+    let publicKey
     let currentPublicKey
 
     async function uploadPublicKey() {
@@ -14,7 +14,7 @@
         try {
             const token = getToken()
             const formData = new FormData()
-            formData.append("publicKey",publicKey)
+            formData.append("publicKey", publicKey)
 
             const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.UPLOAD_KEY, {
                 method: "POST",
@@ -51,8 +51,7 @@
                 console.log("SUCCESS")
                 const responseJson = await response.json()
                 currentPublicKey = responseJson["Response"]
-            }
-            else {
+            } else {
                 currentPublicKey = "Cannot load public key, you must have a public key uploaded to use this service."
             }
         } catch (error) {
@@ -70,11 +69,13 @@
         flex-direction: column;
         align-items: center;
     }
-    .newKeyForm{
+
+    .newKeyForm {
         display: flex;
         flex-direction: column;
 
     }
+
     input {
 
         width: 500px;
@@ -82,7 +83,8 @@
         margin-bottom: 15px;
 
     }
-    .currentPublicKey{
+
+    .currentPublicKey {
         margin-top: 50px;
     }
 </style>

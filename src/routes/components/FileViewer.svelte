@@ -159,8 +159,7 @@
     }
 
     function handleFileChange(event) {
-        const file = event.target.files[0];
-        chosenFile = file;
+        chosenFile = event.target.files[0];
     }
 </script>
 
