@@ -4,6 +4,7 @@
     import {deleteToken} from "../../auth/TokenHandling.js";
     import FileViewer from "../components/FileViewer.svelte";
     import About from "../components/About.svelte";
+    import PublicKeySettings from "../components/PublicKeySettings.svelte";
 
     function handleLogout() {
         deleteToken()
@@ -24,7 +25,7 @@
         {
             label: "Public Key Settings",
             value: 3,
-            component: About
+            component: PublicKeySettings
         },
         {
             label: "About",

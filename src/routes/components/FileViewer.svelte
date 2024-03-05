@@ -16,8 +16,9 @@
     }
 
     let page = 1
-    let files = []
+
     let chosenFile;
+    let files = []
 
     async function downloadFile(fileId, fileName) {
         // Implement file download logic here
@@ -195,25 +196,14 @@
 
     .upload-bar, .upload-form {
         margin-bottom: 25px;
+        margin-top: 70px;
     }
+
 
 
 </style>
 <div>
 
-    <form class="upload-form" on:submit|preventDefault={uploadFile}>
-        <div class="upload-bar">
-            <label for="file">Upload your file</label>
-            <input
-                    type="file"
-                    id="file"
-                    name="fileToUpload"
-                    on:change={handleFileChange}
-                    required
-            />
-        </div>
-        <button type="submit">Submit</button>
-    </form>
 
 
     <div class="file-grid">
@@ -235,5 +225,17 @@
         <button on:click={handleNextPage}>Next</button>
     </div>
 
-
+    <form class="upload-form" on:submit|preventDefault={uploadFile}>
+        <div class="upload-bar">
+            <label for="file">Upload your file</label>
+            <input
+                    type="file"
+                    id="file"
+                    name="fileToUpload"
+                    on:change={handleFileChange}
+                    required
+            />
+        </div>
+        <button type="submit">Upload</button>
+    </form>
 </div>

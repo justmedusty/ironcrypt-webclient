@@ -11,11 +11,7 @@
 
 
 <style>
-
-    a{
-        color:blue;
-        font-size: large;
-    }
+    
     header {
         display: flex;
         justify-content: center; /* Center content horizontally */
@@ -45,8 +41,14 @@
         font-family: "OCR A Extended", monospace;
         text-align: center;
         font-weight: 900;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.65); /* Adjust values as needed */
-
+        font-stretch: extra-expanded;
+        font-size: xx-large; /* Adjust font size for maximum visibility */
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.65); /* Increase text shadow for emphasis */
+        /* Additional styles for further emphasis */
+        padding: 10px; /* Add padding for spacing */
+        margin: 10px; /* Add margin for separation */
+        color: #000; /* Black text color for visibility */
+        border-radius: 5px; /* Rounded corners for style */
     }
 
 
