@@ -33,7 +33,7 @@
                 toast.error("Failed to update. Check your key and try again")
             }
         } catch (error) {
-            alert("error")
+            console.log("error")
         }
 
     }
