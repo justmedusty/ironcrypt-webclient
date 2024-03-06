@@ -285,8 +285,12 @@
         {/each}
     </div>
     <div style="margin-top: 70px">
-        <button on:click={handlePreviousPage}>Previous</button>
-        <button on:click={handleNextPage}>Next</button>
+        {#if page > 1}
+            <button on:click={handlePreviousPage}>Previous</button>
+        {/if}
+        {#if files.length === 25}
+            <button on:click={handleNextPage}>Next</button>
+        {/if}
     </div>
 
     <form class="upload-form" on:submit|preventDefault={uploadFile}>
