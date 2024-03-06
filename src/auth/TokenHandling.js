@@ -1,3 +1,5 @@
+import toast from "svelte-french-toast";
+
 export const saveToken = (accessToken) => {
     const tokenData = {
         token: accessToken,
@@ -19,7 +21,7 @@ export const getToken = ()  => {
     const tokenData = JSON.parse(tokenDataString);
 
     // Check if the token is older than 5 minutes (300,000 milliseconds)
-    const isTokenExpired = Date.now() - tokenData.timestamp > 90000000000;
+    const isTokenExpired = Date.now() - tokenData.timestamp > 9000000;
 
     if (isTokenExpired) {
         // Token is older than 5 minutes, delete it
@@ -33,7 +35,7 @@ export const getToken = ()  => {
 export const deleteToken = () => {
     localStorage.removeItem('accessToken');
     console.log('Token deleted');
-    alert("Your Session Has Expired")
+    toast("Your session has expired")
     window.location.href = '/login';
 };
 

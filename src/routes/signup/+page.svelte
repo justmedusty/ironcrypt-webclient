@@ -28,7 +28,8 @@
                 toast.success("Sign-up Success!")
             goto("/login")
         } else {
-            toast.error("Signup failed: Username must be unique and between 6&45 characters, password must be at least 8 characters.")
+            const responseJson = await response.json()
+            toast.error(responseJson["Response"])
         }
 
     }

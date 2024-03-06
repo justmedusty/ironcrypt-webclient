@@ -16,7 +16,7 @@
             this.fileSizeBytes = fileSizeBytes;
         }
     }
-
+    let hasPublicKey;
     let page = 1
     let chosenFile;
     let files = []
@@ -73,11 +73,12 @@
 
     async function uploadFile() {
         try {
+            await fetchPublicKey()
             selectedFile = chosenFile
             const token = getToken()
             const formData = new FormData()
             formData.append('file', selectedFile)
-            if (selectedFile != null) {
+            if (selectedFile != null && hasPublicKey != false) {
                 const response = await toast.promise(
                     fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
                         method: 'POST',
@@ -90,7 +91,7 @@
                     }),
                     {
                         loading: 'Uploading...',
-                        success: 'Upload Success!',
+                        success: "Success",
                         error: 'Upload Failed.'
                     }
                 );
@@ -101,6 +102,9 @@
                     const responseData = await response.json()
                     toast.error(responseData['Response'])
                 }
+            }
+            else{
+                toast.error("You to make sure you both have a file selected and have a public key uploaded")
             }
 
         } catch (e) {
@@ -151,6 +155,33 @@
         } else return fileName
     }
 
+
+    async function fetchPublicKey() {
+        try {
+            const token = getToken()
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.GET_KEY, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            if (response.ok) {
+                const responseData = await response.json()
+                const keyValue = responseData["Response"]
+                if(keyValue != null && keyValue != ""){
+                    hasPublicKey = true
+                }
+                else{
+                    hasPublicKey = false
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     function handleNextPage() {
         if (files.length === 25) {
             page++
@@ -188,6 +219,7 @@
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
         gap: 20px; /* Adjust gap between items as needed */
         min-width: 40vb;
+        margin-bottom: 70px;
     }
 
     /* CSS styles for individual file items */
@@ -212,11 +244,17 @@
     button {
         margin-left: 10px;
 
+
+    }
+    .upload-bar{
+        margin-bottom: 25px;
     }
 
-    .upload-bar, .upload-form {
-        margin-bottom: 25px;
-        margin-top: 70px;
+    .upload-form {
+        margin-top: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.64); /* black border */
+        padding: 5px; /* add some padding for spacing */
+
     }
 
 
