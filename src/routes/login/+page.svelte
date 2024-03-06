@@ -1,6 +1,6 @@
 <script>
     import {URI} from "../utils/enums";
-    import {saveToken, saveTokenWithAutoDelete} from "../../auth/TokenHandling.js";
+    import {saveTokenWithAutoDelete} from "../../auth/TokenHandling.js";
     import {page} from "$app/stores";
     import {goto} from "$app/navigation";
     import toast, {Toaster} from 'svelte-french-toast';
