@@ -35,7 +35,7 @@
         }
     ];
 </script>
-<div>
+<div >
     <Tabs {items}/>
     <footer>
         <button class="logout" on:click={handleLogout}>Logout
@@ -51,6 +51,8 @@
         align-content: center;
         align-items: center;
         text-align: center;
+        min-width: fit-content;
+
     }
 
     button {

@@ -14,6 +14,7 @@
 	--column-margin-top: 4rem;
 	font-family: "OCR A Extended",sans-serif;
 	color: var(--color-text);
+	min-width: fit-content;
 }
 
 body {
@@ -28,6 +29,9 @@ body {
 			rgba(255, 255, 255, 0) 100%
 		),
 		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 50%);
+	min-width: auto;
+	align-items: center;
+	align-content: center;
 }
 
 h1,

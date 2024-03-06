@@ -72,6 +72,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
     }
 
     .newKeyForm {
@@ -80,10 +81,8 @@
 
     }
 
-    input {
+    textarea {
 
-        width: 500px;
-        height: 300px;
         margin-bottom: 15px;
 
     }

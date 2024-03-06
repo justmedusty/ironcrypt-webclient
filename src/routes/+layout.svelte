@@ -27,8 +27,12 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        align-content: center;
     }
 
+    .content-box{
+        min-width: fit-content;
+    }
     main {
         flex: 1;
         display: flex;
@@ -38,6 +42,9 @@
         max-width: 64rem;
         margin: 0 auto;
         box-sizing: border-box;
+        min-width: fit-content;
+        align-content: center;
+        align-items: center;
     }
 
     footer {

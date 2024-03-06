@@ -224,6 +224,9 @@
         gap: 20px; /* Adjust gap between items as needed */
         min-width: 40vb;
         margin-bottom: 70px;
+        align-items: center;
+        align-content: center;
+        text-align: center
     }
 
     /* CSS styles for individual file items */

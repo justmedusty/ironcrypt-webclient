@@ -45,7 +45,7 @@
         border: 1px solid transparent;
         border-top-left-radius: 0.25rem;
         border-top-right-radius: 0.25rem;
-        display: block;
+        display: inline-block;
         padding: 0.5rem 1rem;
         cursor: pointer;
     }
