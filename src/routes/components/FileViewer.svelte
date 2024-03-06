@@ -16,6 +16,7 @@
             this.fileSizeBytes = fileSizeBytes;
         }
     }
+
     let hasPublicKey;
     let page = 1
     let chosenFile;
@@ -72,44 +73,51 @@
     }
 
     async function uploadFile() {
-        try {
-            await fetchPublicKey()
-            selectedFile = chosenFile
-            const token = getToken()
-            const formData = new FormData()
-            formData.append('file', selectedFile)
-            if (selectedFile != null && hasPublicKey != false) {
-                const response = await toast.promise(
-                    fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
-                        method: 'POST',
-                        headers: {
-                            Authorization: `Bearer ${token}`,
+        await fetchPublicKey()
+
+        if (!hasPublicKey){
+           toast.error("You cannot upload any files until you have a public key uploaded")
+        }else{
+            try {
+
+                selectedFile = chosenFile
+                const token = getToken()
+                const formData = new FormData()
+
+                formData.append('file', selectedFile)
+                if (selectedFile != null) {
+                    const response = await toast.promise(
+                        fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
+                            method: 'POST',
+                            headers: {
+                                Authorization: `Bearer ${token}`,
 
 
-                        },
-                        body: formData
-                    }),
-                    {
-                        loading: 'Uploading...',
-                        success: "Success",
-                        error: 'Upload Failed.'
+                            },
+                            body: formData
+                        }),
+                        {
+                            loading: 'Uploading...',
+                            success: "Success",
+                            error: 'Upload Failed.'
+                        }
+                    );
+
+                    if (response.ok) {
+                        await fetchUserFiles(page)
+                    } else if (response.status === 400) {
+                        const responseData = await response.json()
+                        toast.error(responseData['Response'])
                     }
-                );
-
-                if (response.ok) {
-                    await fetchUserFiles(page)
-                } else if (response.status === 400) {
-                    const responseData = await response.json()
-                    toast.error(responseData['Response'])
+                } else {
+                    toast.error("You to make sure you both have a file selected and have a public key uploaded")
                 }
-            }
-            else{
-                toast.error("You to make sure you both have a file selected and have a public key uploaded")
-            }
 
-        } catch (e) {
-            toast.error(e)
+            } catch (e) {
+                toast.error(e)
+            }
         }
+
 
     }
 
@@ -127,7 +135,6 @@
             if (!response.ok) {
                 console.log('Response data:', responseData); // Log the res
                 toast(responseData['Response'])
-                files = []
             }
 
 
@@ -169,10 +176,9 @@
             if (response.ok) {
                 const responseData = await response.json()
                 const keyValue = responseData["Response"]
-                if(keyValue != null && keyValue != ""){
+                if (keyValue != "null") {
                     hasPublicKey = true
-                }
-                else{
+                } else {
                     hasPublicKey = false
                 }
             }
@@ -246,7 +252,8 @@
 
 
     }
-    .upload-bar{
+
+    .upload-bar {
         margin-bottom: 25px;
     }
 

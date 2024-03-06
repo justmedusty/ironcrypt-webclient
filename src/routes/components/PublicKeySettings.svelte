@@ -27,6 +27,7 @@
 
             if (response.ok) {
                 toast.success("Successfully updated your key!")
+                currentPublicKey = publicKey
                 publicKey = ""
                 await fetchPublicKey()
             } else {
@@ -52,8 +53,11 @@
                 console.log("SUCCESS")
                 const responseJson = await response.json()
                 currentPublicKey = responseJson["Response"]
+                if(currentPublicKey === "null"){
+                    currentPublicKey = "No public key detected, you MUST have a public key uploaded to use this service! There is no support for unencrypted files!"
+                }
             }
-            currentPublicKey = "No public key detected, you MUST have a public key uploaded to use this service! There is no support for unencrypted files!"
+
         } catch (error) {
             console.log(error)
         }
