@@ -75,11 +75,10 @@
     async function uploadFile() {
         await fetchPublicKey()
 
-        if (!hasPublicKey){
-           toast.error("You cannot upload any files until you have a public key uploaded")
-        }else{
+        if (!hasPublicKey) {
+            toast.error("You cannot upload any files until you have a public key uploaded")
+        } else {
             try {
-
                 selectedFile = chosenFile
                 const token = getToken()
                 const formData = new FormData()
@@ -173,20 +172,18 @@
                 },
             })
 
-            if (response.ok) {
-                const responseData = await response.json()
-                const keyValue = responseData["Response"]
-                if (keyValue != "null") {
-                    hasPublicKey = true
-                } else {
-                    hasPublicKey = false
-                }
+            if (!response.ok) {
+                return;
             }
+            const responseData = await response.json()
+            const keyValue = responseData["Response"]
+            hasPublicKey = keyValue !== "null";
         } catch (error) {
             console.log(error)
         }
 
     }
+
 
     function handleNextPage() {
         if (files.length === 25) {
@@ -211,8 +208,9 @@
             // Check the size of the file
             if (file.size > maxSizeBytes) { // Assuming the maximum allowed size is 10 MB
                 toast.error('File size exceeds the limit (1GB)');
+                chosenFile = null
             } else {
-                chosenFile = file;
+                chosenFile = file
             }
         }
     }
