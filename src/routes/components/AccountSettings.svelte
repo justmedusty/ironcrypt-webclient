@@ -1,6 +1,7 @@
 <script>
     import {deleteToken, getToken} from "../../auth/TokenHandling.js";
     import {URI} from "../utils/enums.js";
+    import toast from "svelte-french-toast";
 
     let newUserName = ""
     let newPassword = ""
@@ -27,12 +28,12 @@
                 console.log("SUCCESS")
             } else {
                 const responseJSON = await response.json()
-                alert(responseJSON["Response"])
+                toast.error(responseJSON["Response"])
             }
 
 
         } catch (error) {
-            alert(error)
+            console.log(error)
 
         }
     }
@@ -55,13 +56,14 @@
 
             if (response.ok) {
                 newPassword = ""
-                console.log("SUCCESS")
-            } else {
+                toast.success("Password change successful!")
+            } else if (!response.ok) {
+                const responseJSON = await response.json()
+                toast.error(responseJSON["Response"])
             }
-            const responseJSON = await response.json()
-            alert(responseJSON["Response"])
+
         } catch (error) {
-            alert(error)
+            console.log(error)
 
         }
 
@@ -80,19 +82,16 @@
                         },
                     })
 
+                const responseJSON = await response.json()
 
                 if (response.ok) {
-                    newPassword = ""
-                    console.log("SUCCESS")
-                } else {
-                }
-                const responseJSON = await response.json()
-                alert(responseJSON["Response"])
-                if (response.ok) {
+                    toast.success(responseJSON["Response"])
                     deleteToken()
                 } else {
-                    console.log(responseJSON["Response"])
+                    toast.error(responseJSON["Response"])
                 }
+            } else {
+                toast.error("You must check the Confirm box to delete your account")
             }
 
         } catch (error) {
@@ -106,6 +105,11 @@
     form {
         margin-bottom: 50px;
     }
+
+    .delete {
+        display: inline-flex;
+        align-items: center;
+    }
 </style>
 
 <div>
@@ -116,12 +120,16 @@
     </form>
     <form>
         <label>New Password</label>
-        <input bind:value={newPassword}>
+        <input type="password" bind:value={newPassword}>
         <button on:click={updatePassword}>Submit</button>
     </form>
 
     <div>
-        <input style="width: 20px ; height:20px" type="checkbox" bind:value={confirmDelete}>
+        <h2>Note: Account deletion removes all files associated with your account</h2>
+    </div>
+    <div class="delete">
+        <label>Confirm</label>
+        <input style="width: 20px ; height:20px; margin-right: 50px" type="checkbox" bind:checked={confirmDelete}>
         <button on:click={deleteAccount}>Delete Account</button>
     </div>
 

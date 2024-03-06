@@ -3,6 +3,7 @@
     import {getToken} from "../../auth/TokenHandling.js";
     import {URI} from "../utils/enums.js"
     import {onMount} from "svelte";
+    import toast from "svelte-french-toast";
 
     onMount(fetchPublicKey)
 
@@ -25,11 +26,11 @@
             })
 
             if (response.ok) {
-                console.log("SUCCESS")
+                toast.success("Successfully updated your key!")
                 publicKey = ""
                 await fetchPublicKey()
             } else {
-                console.log("Failure")
+                toast.error("Failed to update. Check your key and try again")
             }
         } catch (error) {
             alert("error")
@@ -51,9 +52,8 @@
                 console.log("SUCCESS")
                 const responseJson = await response.json()
                 currentPublicKey = responseJson["Response"]
-            } else {
-                currentPublicKey = "Cannot load public key, you must have a public key uploaded to use this service."
             }
+            currentPublicKey = "No public key detected, you MUST have a public key uploaded to use this service! There is no support for unencrypted files!"
         } catch (error) {
             console.log(error)
         }

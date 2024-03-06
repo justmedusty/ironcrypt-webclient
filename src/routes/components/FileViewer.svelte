@@ -2,10 +2,12 @@
     import {getToken} from "../../auth/TokenHandling.js";
     import {URI} from "../utils/enums.js";
     import {onMount} from "svelte";
+    import toast from "svelte-french-toast";
 
     let selectedFile;
     onMount(fetchUserFiles)
     const MAX_FILENAME_LENGTH = 15
+    const maxSizeBytes = 1073741824
 
     class File {
         constructor(fileId, fileName, fileSizeBytes) {
@@ -16,7 +18,6 @@
     }
 
     let page = 1
-
     let chosenFile;
     let files = []
 
@@ -33,7 +34,7 @@
                 });
 
             if (!response.ok) {
-                alert('Failed to download file');
+                toast.error("Failed to download file")
             }
             const arrayBuffer = await response.arrayBuffer();
             const blob = new Blob([arrayBuffer], {type: 'application/octet-stream'});
@@ -41,6 +42,7 @@
             const tempAnchor = document.createElement('a');
             tempAnchor.href = blobUrl;
             tempAnchor.download = fileName + ".gpg";
+            toast.success("Success!")
             tempAnchor.click();
 
             // Cleanup
@@ -61,44 +63,54 @@
                     }
                 })
             if (response.ok) {
-                alert("Delete Success!")
+                toast.success("Delete success!")
                 await fetchUserFiles(page)
             }
         } catch (error) {
-            console.log(error)
+            toast.error(error)
         }
     }
 
     async function uploadFile() {
         try {
-
             selectedFile = chosenFile
             const token = getToken()
             const formData = new FormData()
             formData.append('file', selectedFile)
+            if (selectedFile != null) {
+                const response = await toast.promise(
+                    fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
+                        method: 'POST',
+                        headers: {
+                            Authorization: `Bearer ${token}`,
 
-            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${token}`,
 
+                        },
+                        body: formData
+                    }),
+                    {
+                        loading: 'Uploading...',
+                        success: 'Upload Success!',
+                        error: 'Upload Failed.'
+                    }
+                );
 
-                },
-                body: formData
-            })
-            if (response.ok) {
-                fetchUserFiles(page)
-            } else if (response.status === 400) {
-                const responseData = await response.json()
-                alert(responseData['Response'])
+                if (response.ok) {
+                    await fetchUserFiles(page)
+                } else if (response.status === 400) {
+                    const responseData = await response.json()
+                    toast.error(responseData['Response'])
+                }
             }
+
         } catch (e) {
-            alert("error")
+            toast.error(e)
         }
 
     }
 
     async function fetchUserFiles(page) {
+        files = []
         try {
             const token = getToken();
             const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_FETCH + `?page=${page}`, {
@@ -109,9 +121,8 @@
             });
             const responseData = await response.json();
             if (!response.ok) {
-
                 console.log('Response data:', responseData); // Log the res
-                await alert(responseData['Response'])
+                toast(responseData['Response'])
                 files = []
             }
 
@@ -125,7 +136,6 @@
 
             // Extract the array of files
             const filesData = responseData[filesKey];
-
             // Map the files data to instances of the File class
             files = filesData.map(fileData => new File(fileData.fileId, fileData.fileName, fileData.fileSizeBytes));
             console.log('User files:', files);
@@ -159,7 +169,15 @@
     }
 
     function handleFileChange(event) {
-        chosenFile = event.target.files[0];
+        const file = event.target.files[0];
+        if (file) {
+            // Check the size of the file
+            if (file.size > maxSizeBytes) { // Assuming the maximum allowed size is 10 MB
+                toast.error('File size exceeds the limit (1GB)');
+            } else {
+                chosenFile = file;
+            }
+        }
     }
 </script>
 
