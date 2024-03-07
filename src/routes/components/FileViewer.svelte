@@ -6,7 +6,7 @@
 
     let selectedFile;
     onMount(fetchUserFiles)
-    const MAX_FILENAME_LENGTH = 40
+    const MAX_FILENAME_LENGTH = 20
     const maxSizeBytes = 1073741824
 
     class File {
@@ -156,8 +156,8 @@
 
     function truncateFileName(fileName) {
         if (fileName.length > MAX_FILENAME_LENGTH) {
-            const startIndex = fileName.length - MAX_FILENAME_LENGTH;
-            return "..." + fileName.slice(startIndex);
+            fileName = fileName.replace("\n" ,"")
+            return  fileName.slice(0, MAX_FILENAME_LENGTH) +"..." ;
         } else return fileName
     }
 

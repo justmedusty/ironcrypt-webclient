@@ -4,10 +4,13 @@
     <p>
         This is an PGP centric file storage web app created with ktor and svelte. I created this after my previous
         encrypted messaging service Encryptix, which utilized ktor as
-        well for the backend and react for the front end. You can access Encryptix here :
-    </p>
+        well for the backend and react for the front end.  </p>
+    <h3>You can access Encryptix here : </h3>
+
     <a href="http://fxrs5p2pcw47hy6y7o2tgzanmms4ozt7fgfhhtjc2bffliy6ahzmqkqd.onion" style="color: blue">Encryptix</a>
     <br>
+    <br/>
+    <br/>
     <br/>
     <a href="http://rfocekyg734pio6djwunr4j6a7kdutgzux7mm5npy33azjwcocfslkad.onion" style="color: blue">Mirror</a>
     <p>

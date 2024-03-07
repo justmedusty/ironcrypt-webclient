@@ -21,10 +21,9 @@ export const getToken = ()  => {
     const tokenData = JSON.parse(tokenDataString);
 
     // Check if the token is older than 5 minutes (300,000 milliseconds)
-    const isTokenExpired = Date.now() - tokenData.timestamp > 9000000;
+    const isTokenExpired = Date.now() - tokenData.timestamp > 900000;
 
     if (isTokenExpired) {
-        // Token is older than 5 minutes, delete it
         deleteToken();
         return null;
     }
@@ -43,6 +42,6 @@ export const deleteToken = () => {
 export const saveTokenWithAutoDelete = (accessToken) => {
     saveToken(accessToken);
 
-    // Schedule the token deletion after 5 minutes
+    // Schedule the token deletion after 15 minutes
     setTimeout(deleteToken, 900000);
 };
