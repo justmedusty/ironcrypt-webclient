@@ -6,7 +6,7 @@
 
     let selectedFile;
     onMount(fetchUserFiles)
-    const MAX_FILENAME_LENGTH = 15
+    const MAX_FILENAME_LENGTH = 40
     const maxSizeBytes = 1073741824
 
     class File {
@@ -274,7 +274,7 @@
         {#each files as file}
             <div class="file-item">
                 <img src="/src/lib/images/lockedfile.png" alt={file.fileName} class="file-image">
-                <div>{truncateFileName(file.fileName)}
+                <div style="font-size: medium">{truncateFileName(file.fileName)}
                 </div>
                 <div class="button-row">
                     <button on:click={() => downloadFile(file.fileId,file.fileName)}>Download</button>
