@@ -19,4 +19,7 @@
         except by the person they were intended for, allowing for a very strong sense (and reality) of privacy. I enjoy
         building privacy centric applications and will continue to do so in my quest to learn and build things.
     </p>
+    <p>
+        If you are interested in the source code fire me a message on <a href="http://fxrs5p2pcw47hy6y7o2tgzanmms4ozt7fgfhhtjc2bffliy6ahzmqkqd.onion" style="color: blue">Encryptix</a> and I will share the github repository.
+    </p>
 </div>

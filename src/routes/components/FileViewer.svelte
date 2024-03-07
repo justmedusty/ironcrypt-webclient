@@ -260,9 +260,10 @@
 
     .upload-form {
         margin-top: 25px;
-        border: 5px solid rgba(255, 255, 255, 0.64); /* black border */
+        border: 5px solid rgba(255, 255, 255, 0.48); /* black border */
         padding: 5px; /* add some padding for spacing */
         border-radius: .5rem .5rem .5rem .5rem;
+        background-color: rgba(255, 255, 255, 0.08);
 
     }
 
