@@ -222,7 +222,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
         gap: 20px; /* Adjust gap between items as needed */
-        min-width: 40vb;
+        min-width: 40vw;
         margin-bottom: 70px;
         align-items: center;
         align-content: center;
@@ -260,8 +260,9 @@
 
     .upload-form {
         margin-top: 25px;
-        border: 1px solid rgba(255, 255, 255, 0.64); /* black border */
+        border: 5px solid rgba(255, 255, 255, 0.64); /* black border */
         padding: 5px; /* add some padding for spacing */
+        border-radius: .5rem .5rem .5rem .5rem;
 
     }
 

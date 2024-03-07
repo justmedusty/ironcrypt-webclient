@@ -23,9 +23,8 @@
     .box {
         margin-bottom: 10px;
         padding: 40px;
-        border: 1px solid #dee2e6;
-        border-radius: 0 0 .5rem .5rem;
-        border-top: 0;
+        border-radius: .5rem .5rem .5rem .5rem;
+        border: 5px solid rgba(255, 255, 255, 0.46);
         align-content: center;
     }
     ul {
@@ -34,11 +33,10 @@
         padding-left: 0;
         margin-bottom: 0;
         list-style: none;
-        border-bottom: 1px solid #dee2e6;
         justify-content: center;
     }
     li {
-        margin-bottom: -1px;
+        margin-bottom: 0px;
     }
 
     span {
@@ -51,12 +49,11 @@
     }
 
     span:hover {
-        border-color: #e9ecef #e9ecef #dee2e6;
+        border-color: rgb(233, 236, 239) rgb(233, 236, 239) #dee2e6 rgb(222, 226, 230);
     }
 
     li.active > span {
         color: #495057;
-        background-color: #fff;
-        border-color: #dee2e6 #dee2e6 #fff;
+        background-color: rgba(255, 255, 255, 0.5);
     }
 </style>

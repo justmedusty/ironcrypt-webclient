@@ -104,6 +104,6 @@
 <div class="currentPublicKey">
 
     <h1>Your Current Public Key:</h1>
-    <label>{currentPublicKey}</label>
+    {currentPublicKey}
 
 </div>
