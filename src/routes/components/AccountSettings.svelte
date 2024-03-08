@@ -125,7 +125,7 @@
     </form>
 
     <div>
-        <h2>Note: Account deletion removes all files associated with your account</h2>
+        <h3>Note: Account deletion removes all files associated with your account</h3>
     </div>
     <div class="delete">
         <label>Confirm</label>

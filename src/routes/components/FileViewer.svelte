@@ -156,29 +156,6 @@
     }
 
 
-    async function fetchPublicKey() {
-        try {
-            const token = getToken()
-            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.GET_KEY, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-
-            if (!response.ok) {
-                return;
-            }
-            const responseData = await response.json()
-            const keyValue = responseData["Response"]
-            hasPublicKey = keyValue !== "null";
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
-
     function handleNextPage() {
         if (files.length === 25) {
             page++
@@ -265,7 +242,6 @@
 
 </style>
 <div>
-
 
     <div class="file-grid">
         {#each files as file}
