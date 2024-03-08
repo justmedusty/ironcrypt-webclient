@@ -116,19 +116,19 @@
     <form>
         <label>New Username</label>
         <input bind:value={newUserName}>
-        <button on:click={updateUserName}>Submit</button>
+        <button on:click|preventDefault={updateUserName}>Submit</button>
     </form>
     <form>
         <label>New Password</label>
         <input type="password" bind:value={newPassword}>
-        <button on:click={updatePassword}>Submit</button>
+        <button on:click|preventDefault={updatePassword}>Submit</button>
     </form>
 
     <div>
         <h3>Note: Account deletion removes all files associated with your account</h3>
     </div>
     <div class="delete">
-        <label>Confirm</label>
+        <h2>Confirm</h2>
         <input style="width: 20px ; height:20px; margin-right: 50px" type="checkbox" bind:checked={confirmDelete}>
         <button on:click={deleteAccount}>Delete Account</button>
     </div>

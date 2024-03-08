@@ -3,6 +3,7 @@
     import {URI} from "../utils/enums.js";
     import {onMount} from "svelte";
     import toast from "svelte-french-toast";
+    import Confirm from "./Confirm.svelte";
 
     let selectedFile;
     onMount(fetchUserFiles)
@@ -21,6 +22,21 @@
     let page = 1
     let chosenFile;
     let files = []
+    let show = false
+    let confirmed
+    let fileToDeleteId
+
+    const onConfirm = () => {
+        show = false
+        confirmed = true
+        alert('you confirmed')
+    }
+
+    const onCancel = () => {
+        show = false
+        confirmed = false
+        console.log('canceled')
+    }
 
     async function downloadFile(fileId, fileName) {
         // Implement file download logic here
@@ -64,6 +80,7 @@
                     }
                 })
             if (response.ok) {
+                show = false
                 toast.success("Delete success!")
                 await fetchUserFiles(page)
             }
@@ -185,6 +202,11 @@
             }
         }
     }
+
+    function handleDeleteDialog(fileId){
+        fileToDeleteId = fileId
+        show = true
+    }
 </script>
 
 <style>
@@ -241,7 +263,11 @@
 
 
 </style>
+<Confirm bind:show on:confirm={() => deleteFile(fileToDeleteId)} on:cancel={onCancel} title='Confirm deletion?'>
+    Would you like to delete this file? This is permanent.
+</Confirm>
 <div>
+
 
     <div class="file-grid">
         {#each files as file}
@@ -250,11 +276,9 @@
                 <div style="font-size: medium">{truncateFileName(file.fileName)}
                     <div class="button-row">
                         <button on:click={() => downloadFile(file.fileId,file.fileName)}>Download</button>
-                        <button on:click={() => deleteFile(file.fileId)}>Delete</button>
+                        <button on:click={() => handleDeleteDialog(file.fileId)}>Delete</button>
                     </div>
                 </div>
-
-
             </div>
         {/each}
     </div>
