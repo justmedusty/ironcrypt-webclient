@@ -73,48 +73,42 @@
     }
 
     async function uploadFile() {
-        await fetchPublicKey()
+        try {
+            selectedFile = chosenFile
+            const token = getToken()
+            const formData = new FormData()
 
-        if (!hasPublicKey) {
-            toast.error("You cannot upload any files until you have a public key uploaded")
-        } else {
-            try {
-                selectedFile = chosenFile
-                const token = getToken()
-                const formData = new FormData()
-
-                formData.append('file', selectedFile)
-                if (selectedFile != null) {
-                    const response = await toast.promise(
-                        fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
-                            method: 'POST',
-                            headers: {
-                                Authorization: `Bearer ${token}`,
+            formData.append('file', selectedFile)
+            if (selectedFile != null) {
+                const response = await toast.promise(
+                    fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_UPLOAD, {
+                        method: 'POST',
+                        headers: {
+                            Authorization: `Bearer ${token}`,
 
 
-                            },
-                            body: formData
-                        }),
-                        {
-                            loading: 'Uploading...',
-                            success: "Success",
-                            error: 'Upload Failed.'
-                        }
-                    );
-
-                    if (response.ok) {
-                        await fetchUserFiles(page)
-                    } else if (response.status === 400) {
-                        const responseData = await response.json()
-                        toast.error(responseData['Response'])
+                        },
+                        body: formData
+                    }),
+                    {
+                        loading: 'Uploading...',
+                        success: "Success",
+                        error: 'Upload Failed.'
                     }
-                } else {
-                    toast.error("You to make sure you both have a file selected and have a public key uploaded")
-                }
+                );
 
-            } catch (e) {
-                toast.error(e)
+                if (response.ok) {
+                    await fetchUserFiles(page)
+                } else if (!response.ok) {
+                    const responseData = await response.json()
+                    toast.error(responseData['Response'])
+                }
+            } else {
+                toast.error("You to make sure you both have a file selected and have a public key uploaded")
             }
+
+        } catch (e) {
+            toast.error(e)
         }
 
 
@@ -156,8 +150,8 @@
 
     function truncateFileName(fileName) {
         if (fileName.length > MAX_FILENAME_LENGTH) {
-            fileName = fileName.replace("\n" ,"")
-            return  fileName.slice(0, MAX_FILENAME_LENGTH) +"..." ;
+            fileName = fileName.replace("\n", "")
+            return fileName.slice(0, MAX_FILENAME_LENGTH) + "...";
         } else return fileName
     }
 
@@ -222,7 +216,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
         gap: 20px; /* Adjust gap between items as needed */
-        min-width: 40vw;
+        min-width: 49vw;
         margin-bottom: 70px;
         align-items: center;
         align-content: center;
@@ -264,6 +258,7 @@
         padding: 5px; /* add some padding for spacing */
         border-radius: .5rem .5rem .5rem .5rem;
         background-color: rgba(255, 255, 255, 0.08);
+        max-width: inherit;
 
     }
 
@@ -277,11 +272,12 @@
             <div class="file-item">
                 <img src="/src/lib/images/lockedfile.png" alt={file.fileName} class="file-image">
                 <div style="font-size: medium">{truncateFileName(file.fileName)}
+                    <div class="button-row">
+                        <button on:click={() => downloadFile(file.fileId,file.fileName)}>Download</button>
+                        <button on:click={() => deleteFile(file.fileId)}>Delete</button>
+                    </div>
                 </div>
-                <div class="button-row">
-                    <button on:click={() => downloadFile(file.fileId,file.fileName)}>Download</button>
-                    <button on:click={() => deleteFile(file.fileId)}>Delete</button>
-                </div>
+
 
             </div>
         {/each}

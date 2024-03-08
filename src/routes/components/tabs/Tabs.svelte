@@ -36,7 +36,7 @@
         justify-content: center;
     }
     li {
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
 
     span {
@@ -55,5 +55,6 @@
     li.active > span {
         color: #495057;
         background-color: rgba(255, 255, 255, 0.5);
+        font-weight: 900;
     }
 </style>
