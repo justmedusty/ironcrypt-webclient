@@ -27,7 +27,6 @@
     let confirmed
     let fileToDeleteId
     let fileNameToDelete
-    let limit = 25
 
     const onCancel = () => {
         show = false
@@ -81,7 +80,7 @@
                 show = false
                 toast.success("Delete success!")
                 fileNameToDelete = null
-                await fetchUserFiles(page)
+                await fetchUserFiles(page, limit)
             }
         } catch (error) {
             toast.error(error)
@@ -130,11 +129,11 @@
 
     }
 
-    async function fetchUserFiles(page,limit) {
+    async function fetchUserFiles(page) {
         files = []
         try {
             const token = getToken();
-            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_FETCH + `?page=${page}` + `&limit=${limit}`, {
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_FETCH + `?page=${page}` + `&limit=15`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -164,7 +163,6 @@
         }
     }
 
-    $:fetchUserFiles(page,limit)
 
     function truncateFileName(fileName) {
         if (fileName.length > MAX_FILENAME_LENGTH) {
@@ -175,7 +173,7 @@
 
 
     function handleNextPage() {
-        if (files.length === limit) {
+            if (files.length === 15) {
             page++
             fetchUserFiles(page)
         }
@@ -287,7 +285,9 @@
         {#if page > 1}
             <button on:click={handlePreviousPage}>Previous</button>
         {/if}
+        {#if files.length === 15}
             <button on:click={handleNextPage}>Next</button>
+            {/if}
     </div>
 
     <form class="upload-form" on:submit|preventDefault={uploadFile}>
@@ -303,15 +303,5 @@
         </div>
         <button type="submit">Upload</button>
     </form>
-<div>
-    <br>
-    <label style="margin-top: 10px" for="page-limit">Page Limit:</label>
-    <select name="page-limits" id="page-limit" bind:value={limit}>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="75">75</option>
-    </select>
-</div>
 
 </div>
