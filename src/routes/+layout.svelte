@@ -33,6 +33,7 @@
     .content-box{
         min-width: inherit;
     }
+
     main {
         flex: 1;
         display: flex;

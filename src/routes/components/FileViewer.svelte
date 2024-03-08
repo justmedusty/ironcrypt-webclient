@@ -10,6 +10,7 @@
     const MAX_FILENAME_LENGTH = 20
     const maxSizeBytes = 1073741824
 
+
     class File {
         constructor(fileId, fileName, fileSizeBytes) {
             this.fileId = fileId;
@@ -25,16 +26,13 @@
     let show = false
     let confirmed
     let fileToDeleteId
-
-    const onConfirm = () => {
-        show = false
-        confirmed = true
-        alert('you confirmed')
-    }
+    let fileNameToDelete
+    let limit = 25
 
     const onCancel = () => {
         show = false
         confirmed = false
+        fileNameToDelete = null
         console.log('canceled')
     }
 
@@ -82,6 +80,7 @@
             if (response.ok) {
                 show = false
                 toast.success("Delete success!")
+                fileNameToDelete = null
                 await fetchUserFiles(page)
             }
         } catch (error) {
@@ -131,11 +130,11 @@
 
     }
 
-    async function fetchUserFiles(page) {
+    async function fetchUserFiles(page,limit) {
         files = []
         try {
             const token = getToken();
-            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_FETCH + `?page=${page}`, {
+            const response = await fetch(URI.BASE_URL + URI.BASE_URI + URI.FILE_FETCH + `?page=${page}` + `&limit=${limit}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -165,6 +164,8 @@
         }
     }
 
+    $:fetchUserFiles(page,limit)
+
     function truncateFileName(fileName) {
         if (fileName.length > MAX_FILENAME_LENGTH) {
             fileName = fileName.replace("\n", "")
@@ -174,7 +175,7 @@
 
 
     function handleNextPage() {
-        if (files.length === 25) {
+        if (files.length === limit) {
             page++
             fetchUserFiles(page)
         }
@@ -203,8 +204,9 @@
         }
     }
 
-    function handleDeleteDialog(fileId){
+    function handleDeleteDialog(fileId,fileName){
         fileToDeleteId = fileId
+        fileNameToDelete = fileName
         show = true
     }
 </script>
@@ -238,13 +240,12 @@
     .button-row {
         display: flex;
         flex-direction: row;
-        margin-block: 5px;
+        margin-block: 10px;
     }
 
     button {
         margin-left: 10px;
-
-
+        background-size: inherit;
     }
 
     .upload-bar {
@@ -263,8 +264,8 @@
 
 
 </style>
-<Confirm bind:show on:confirm={() => deleteFile(fileToDeleteId)} on:cancel={onCancel} title='Confirm deletion?'>
-    Would you like to delete this file? This is permanent.
+<Confirm bind:show on:confirm={() =>{  return deleteFile(fileToDeleteId); }} on:cancel={onCancel} title='Confirm deletion?'>
+    Would you like to delete {fileNameToDelete}? This is permanent.
 </Confirm>
 <div>
 
@@ -273,10 +274,10 @@
         {#each files as file}
             <div class="file-item">
                 <img src="/src/lib/images/lockedfile.png" alt={file.fileName} class="file-image">
-                <div style="font-size: medium">{truncateFileName(file.fileName)}
+                <div style="font-weight: 500">{truncateFileName(file.fileName)}
                     <div class="button-row">
                         <button on:click={() => downloadFile(file.fileId,file.fileName)}>Download</button>
-                        <button on:click={() => handleDeleteDialog(file.fileId)}>Delete</button>
+                        <button on:click={() => handleDeleteDialog(file.fileId,file.fileName)}>Delete</button>
                     </div>
                 </div>
             </div>
@@ -286,9 +287,7 @@
         {#if page > 1}
             <button on:click={handlePreviousPage}>Previous</button>
         {/if}
-        {#if files.length === 25}
             <button on:click={handleNextPage}>Next</button>
-        {/if}
     </div>
 
     <form class="upload-form" on:submit|preventDefault={uploadFile}>
@@ -304,4 +303,15 @@
         </div>
         <button type="submit">Upload</button>
     </form>
+<div>
+    <br>
+    <label style="margin-top: 10px" for="page-limit">Page Limit:</label>
+    <select name="page-limits" id="page-limit" bind:value={limit}>
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="75">75</option>
+    </select>
+</div>
+
 </div>

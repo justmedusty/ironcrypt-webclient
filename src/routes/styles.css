@@ -82,14 +82,15 @@ pre {
 	margin: 0 auto;
 }
 
-input,
-button {
+input{
 	font-size: inherit;
+	max-height: fit-content;
 	font-family: inherit;
 }
 button{
 	background-color: rgba(0, 0, 0, 0.8);
 	color: whitesmoke;
+	max-height: min-content;
 }
 
 button:focus:not(:focus-visible) {

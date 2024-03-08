@@ -1,9 +1,5 @@
-<svelte:head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-</svelte:head>
-
 <script>
-    import { createEventDispatcher } from 'svelte'
+    import {createEventDispatcher} from 'svelte'
 
     export let show = true
     export let title = ''
@@ -11,29 +7,38 @@
     const dispatch = createEventDispatcher()
 </script>
 <style>
-    div{
-        background-color: rgba(255, 255, 255, 0.16);
+    div {
+        background-color: rgb(255, 255, 255);
+        border-radius: .5rem .5rem .5rem .5rem;
+        margin-bottom: 15px;
     }
-    .btn-primary{
+
+    .btn-primary, .btn-secondary {
         background-color: rgba(0, 0, 0, 0.85);
     }
+
+    .btn-primary:hover {
+        background-color: #ff0000;
+    }
+
+    .btn-secondary:hover {
+        background-color: limegreen;
+    }
+
 </style>
 {#if show}
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{title}</h5>
-                <button on:click={() => dispatch('cancel')} class="close" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <slot />
-            </div>
-            <div class="modal-footer">
-                <button on:click={() => dispatch('cancel')} class="btn btn-secondary">Cancel</button>
-                <button on:click={() => dispatch('confirm')} class="btn btn-primary">Confirm</button>
-            </div>
+    <div>
+        <br/>
+        <h5 style="font-size: medium">{title}</h5>
+        <slot/>
+        <div>
+            <br>
+            <button on:click={() => dispatch('cancel')} class="btn btn-secondary">Cancel</button>
+            <button on:click={() => dispatch('confirm')} class="btn btn-primary">Confirm</button>
+            <br>
         </div>
+        <br>
+
+
     </div>
 {/if}
