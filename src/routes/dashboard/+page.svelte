@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import Tabs from "../components/tabs/Tabs.svelte";
+    import Tabs from "../components/Tabs.svelte";
     import {deleteToken} from "../../auth/TokenHandling.js";
     import FileViewer from "../components/FileViewer.svelte";
     import About from "../components/About.svelte";
