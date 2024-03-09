@@ -103,7 +103,7 @@
 </div>
 <div class="currentPublicKey">
 
-    <h1>Your Current Public Key:</h1>
+    <h2>Your Current Public Key:</h2>
     {currentPublicKey}
 
 </div>

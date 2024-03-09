@@ -56,16 +56,21 @@
         width: 50%;
     }
 
-    h1 {
+    h2 {
         color: #000000;
+        font-size: xx-large;
+        font-weight: 900;
+        border: white;
+
     }
 
 </style>
 
 
-<h1>Sign Up</h1>
 
 <form on:submit|preventDefault={handleSubmit}>
+
+    <h2>Sign Up</h2>
     <label>
         Username :
         <input type="text" bind:value={username}/>

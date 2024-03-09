@@ -80,7 +80,7 @@
                 show = false
                 toast.success("Delete success!")
                 fileNameToDelete = null
-                await fetchUserFiles(page, limit)
+                await fetchUserFiles(page)
             }
         } catch (error) {
             toast.error(error)
@@ -246,6 +246,7 @@
         background-size: inherit;
     }
 
+
     .upload-bar {
         margin-bottom: 25px;
     }
@@ -257,7 +258,6 @@
         border-radius: .5rem .5rem .5rem .5rem;
         background-color: rgba(255, 255, 255, 0.08);
         max-width: inherit;
-
     }
 
 
@@ -272,7 +272,7 @@
         {#each files as file}
             <div class="file-item">
                 <img src="/src/lib/images/lockedfile.png" alt={file.fileName} class="file-image">
-                <div style="font-weight: 500">{truncateFileName(file.fileName)}
+                <div class="name" style="font-weight: 500">{truncateFileName(file.fileName)}
                     <div class="button-row">
                         <button on:click={() => downloadFile(file.fileId,file.fileName)}>Download</button>
                         <button on:click={() => handleDeleteDialog(file.fileId,file.fileName)}>Delete</button>
@@ -290,7 +290,7 @@
             {/if}
     </div>
     <div>
-        <h5>Page : {page}</h5>
+        <h5 style="font-size: medium">Page : {page}</h5>
     </div>
 
     <form class="upload-form" on:submit|preventDefault={uploadFile}>

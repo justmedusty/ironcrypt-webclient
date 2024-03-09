@@ -1,5 +1,5 @@
 <div class="text-column">
-    <h1>About this app</h1>
+    <h2>About this app</h2>
 
     <p>
         This is an PGP centric file storage web app created with ktor and svelte. I created this after my previous
@@ -20,6 +20,6 @@
         building privacy centric applications and will continue to do so in my quest to learn and build things.
     </p>
     <p>
-        If you are interested in the source code fire me a message on <a href="http://fxrs5p2pcw47hy6y7o2tgzanmms4ozt7fgfhhtjc2bffliy6ahzmqkqd.onion" style="color: blue">Encryptix</a> and I will share the github repository and answer any other questions you may have My username on Encryptix is rustydusty.
+        If you are interested in the source code fire me a message on <a href="http://fxrs5p2pcw47hy6y7o2tgzanmms4ozt7fgfhhtjc2bffliy6ahzmqkqd.onion" style="color: blue">Encryptix</a> and I will share the github repository and answer any other questions you may have. My username on Encryptix is rustydusty.
     </p>
 </div>
