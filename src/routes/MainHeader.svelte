@@ -6,7 +6,7 @@
             <!-- Adjust margin and height as needed -->
         </li>
         <li>
-            <h2>   <img src="/key.gif" style="margin-right: 10px; height: 50px; width: 50px; ">Asymmetric Encryption + File Storage   <img src="/redlock.gif" style="margin-left: 10px; height: 50px; width: 50px"></h2>
+            <h2 style="margin-left:1vb">   <img src="/key.gif" style="margin-right: 10px; height: 50px; width: 50px; ">Asymmetric Encryption Meets Remote File Storage   <img src="/redlock.gif" style="margin-left: 10px; height: 50px; width: 50px"></h2>
         </li>
     </ul>
 </header>
@@ -17,7 +17,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-top: 25px;
     }
 
     ul {

@@ -7,7 +7,7 @@
 
     let selectedFile;
     onMount(fetchUserFiles)
-    const MAX_FILENAME_LENGTH = 20
+    const MAX_FILENAME_LENGTH = 17
     const maxSizeBytes = 1073741824
 
 
@@ -167,6 +167,8 @@
     function truncateFileName(fileName) {
         if (fileName.length > MAX_FILENAME_LENGTH) {
             fileName = fileName.replace("\n", "")
+            fileName = fileName.replace(" ", "")
+            fileName = fileName.replace("-", "")
             return fileName.slice(0, MAX_FILENAME_LENGTH) + "...";
         } else return fileName
     }
@@ -213,7 +215,7 @@
     /* CSS styles for the grid container */
     .file-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust column width as needed */
         gap: 20px; /* Adjust gap between items as needed */
         min-width: 49vw;
         margin-bottom: 70px;
@@ -260,6 +262,9 @@
         max-width: inherit;
     }
 
+    .name{
+    }
+
 
 </style>
 <Confirm bind:show on:confirm={() =>{  return deleteFile(fileToDeleteId); }} on:cancel={onCancel} title='Confirm deletion?'>
@@ -272,7 +277,7 @@
         {#each files as file}
             <div class="file-item">
                 <img src="/src/lib/images/lockedfile.png" alt={file.fileName} class="file-image">
-                <div class="name" style="font-weight: 500">{truncateFileName(file.fileName)}
+                <div class="name" style="font-weight: 200"><h4 style="color: #881818">{truncateFileName(file.fileName)}</h4>
                     <div class="button-row">
                         <button on:click={() => downloadFile(file.fileId,file.fileName)}>Download</button>
                         <button on:click={() => handleDeleteDialog(file.fileId,file.fileName)}>Delete</button>
