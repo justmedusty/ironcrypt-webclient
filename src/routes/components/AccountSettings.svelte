@@ -25,7 +25,7 @@
 
             if (response.ok) {
                 newUserName = ""
-                console.log("SUCCESS")
+                toast.success("Success!")
             } else {
                 const responseJSON = await response.json()
                 toast.error(responseJSON["Response"])

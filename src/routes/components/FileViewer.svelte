@@ -289,6 +289,9 @@
             <button on:click={handleNextPage}>Next</button>
             {/if}
     </div>
+    <div>
+        <h5>Page : {page}</h5>
+    </div>
 
     <form class="upload-form" on:submit|preventDefault={uploadFile}>
         <div class="upload-bar">
