@@ -19,7 +19,7 @@
         width: 100vw; /* Full width of the viewport */
         max-width: 100%; /* Limit width to the viewport width */
         box-sizing: border-box;
-        margin-top: 15px;
+        margin-top: 25px;
         margin-bottom: 2vb;
     }
 
@@ -42,13 +42,13 @@
         text-align: center;
         font-weight: 900;
         font-stretch: extra-expanded;
-        font-size: xx-large; /* Adjust font size for maximum visibility */
-        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.65); /* Increase text shadow for emphasis */
+        font-size: xxx-large; /* Adjust font size for maximum visibility */
+        text-shadow: 8px 8px 12px rgb(0, 0, 0); /* Increase text shadow for emphasis */
         /* Additional styles for further emphasis */
         padding: 10px; /* Add padding for spacing */
         margin: 10px; /* Add margin for separation */
         color: #000; /* Black text color for visibility */
-        border-radius: 5px; /* Rounded corners for style */
+        border-radius: 100vmax; /* Rounded corners for style */
     }
 
 

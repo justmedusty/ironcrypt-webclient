@@ -8,7 +8,7 @@
 </script>
 <style>
     div {
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(231, 231, 231);
         border-radius: .5rem .5rem .5rem .5rem;
         margin-bottom: 15px;
     }
