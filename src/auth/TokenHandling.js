@@ -13,7 +13,6 @@ export const saveToken = (accessToken) => {
 
 export const getToken = ()  => {
     const tokenDataString = localStorage.getItem('accessToken');
-
     if (!tokenDataString) {
         return null;
     }

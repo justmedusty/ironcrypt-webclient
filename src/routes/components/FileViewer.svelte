@@ -215,7 +215,7 @@
     /* CSS styles for the grid container */
     .file-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust column width as needed */
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
         gap: 20px; /* Adjust gap between items as needed */
         min-width: 49vw;
         margin-bottom: 70px;
@@ -260,9 +260,6 @@
         border-radius: .5rem .5rem .5rem .5rem;
         background-color: rgba(255, 255, 255, 0.08);
         max-width: inherit;
-    }
-
-    .name{
     }
 
 

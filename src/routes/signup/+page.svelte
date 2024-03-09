@@ -63,6 +63,12 @@
         border: white;
 
     }
+    button{
+        margin-top: 15px;
+    }
+    a{
+        color :blue;
+    }
 
 </style>
 
@@ -83,10 +89,10 @@
 
 
     </label>
-    <button style="margin-bottom: 25px" type="submit">Submit</button>
-    <button class="switch-pages" aria-current={$page.url.pathname.startsWith("/login")?undefined:'page'}>
+    <button style="margin-bottom: 25px" type="submit">Sign Up</button>
+    <div>
         <a href="/login">Already have an account?</a>
-    </button>
+    </div>
 
 </form>
 

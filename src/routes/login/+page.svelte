@@ -64,6 +64,23 @@
 
     }
 
+    button {
+        background-color: #000000;
+        color: whitesmoke;
+        margin-top: 15px;
+        width: 50%;
+    }
+
+    h2 {
+        color: #000000;
+        font-size: xx-large;
+        font-weight: 900;
+        border: white;
+
+    }
+    a{
+        color: blue;
+    }
 </style>
 
 
@@ -82,10 +99,12 @@
 
 
     </label>
-    <button style="margin-bottom: 25px;  width: 50%;" type="submit">Submit</button>
-    <button class="switch-pages" aria-current={$page.url.pathname.startsWith('/signup') ? 'page' : undefined}>
+    <button style="margin-bottom: 25px; width: 50%;" type="submit">Login</button>
+
+    <div class="switch-pages">
         <a href="/signup">Don't have an account?</a>
-    </button>
+    </div>
+
 
 
 </form>
